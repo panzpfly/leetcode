@@ -17,27 +17,33 @@
  */
 class Solution {
 public:
-    int getLength(ListNode* head) {
-        int length = 0;
-        while (head) {
-            
-            ++length;
-            head = head->next;
+    int getlength(ListNode* head){
+        ListNode* cur = head;
+        int len = 0;
+        while(cur != NULL){
+            cur = cur -> next;
+            len++;
         }
-        return length;
+        return len;
     }
-
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* dummy = new ListNode(0, head);
-        int length = getLength(head);
-        ListNode* cur = dummy;
-        for (int i = 1; i < length - n + 1; ++i) {
-            cur = cur->next;
-        }
-        cur->next = cur->next->next;
-        ListNode* ans = dummy->next;
-        delete dummy;
-        return ans;
+    ListNode* dummyhead = new ListNode(0);
+    dummyhead -> next = head;
+    ListNode* cur = head;
+    int len = getlength(head);
+    if(len == n){
+        dummyhead -> next = cur -> next;
+        ListNode* temp = cur;
+        delete temp;
+        return dummyhead -> next;
+    }
+    for(int i = 0;i < len - n - 1;i++){
+        cur = cur -> next;
+    }
+    ListNode* temp = cur -> next;
+    cur -> next = cur -> next -> next;
+    delete temp;
+    return dummyhead -> next;
     }
 };
 // @lc code=end
